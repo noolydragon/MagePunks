@@ -162,8 +162,12 @@ void PlayerController::Update(float _dt)
                 }
             }
 
-            if (I_Item* item = scannerHit.entity->GetScript<I_Item>())
-                name = item->GetName();
+            if (I_Item* item = scannerHit.entity->GetScript<I_Item>()) {
+                name = std::string("Press E to Pickup ") + item->GetName();
+
+                if (input.JustPressedKey(Key::E))
+                    scannerHit.entity->Destroy();
+            }
 
             if (name != "")
                 if (Entity* info = entity.scene.GetEntityWithTag("INFO_TEXT"))

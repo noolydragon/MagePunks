@@ -513,21 +513,10 @@ Entities:
   - Entity: 9449876250406915685
     Name: Gold_Item
     Tag: ""
-    Canis::RectTransform:
-      active: true
-      position: [0, 0]
-      size: [32, 32]
-      scale: [1, 1]
-      originOffset: [0, 0]
-      depth: 0.001
-      rotation: 0
-      parent: 0
-      children:
-        []
     Canis::Transform:
       active: true
-      position: [-2.9232635, 0.8, -6]
-      rotation: [0.78539836, 0.78539824, 1.5707964]
+      position: [-2.9232635, 3, -6]
+      rotation: [0, 0, 0]
       scale: [0.5, 0.5, 0.5]
       parent: 0
       children:
@@ -563,24 +552,18 @@ Entities:
         path: assets/defaults/models/cube.glb
         uuid: 17154083321347000101
     Gold: ~
+    PickupEffect:
+      rotationSpeed: 120
+      fallSpeed: 1
+      targetGroundOffset: 1
+      groundCollisionMask: 1
   - Entity: 14413901155226443844
     Name: Uranium_Item
     Tag: ""
-    Canis::RectTransform:
-      active: true
-      position: [0, 0]
-      size: [32, 32]
-      scale: [1, 1]
-      originOffset: [0, 0]
-      depth: 0.001
-      rotation: 0
-      parent: 0
-      children:
-        []
     Canis::Transform:
       active: true
-      position: [3, 0.8, -6]
-      rotation: [0.7853982, 0.7853982, 1.5707964]
+      position: [3, 3, -6]
+      rotation: [0, 0, 0]
       scale: [0.5, 0.5, 0.5]
       parent: 0
       children:
@@ -615,25 +598,19 @@ Entities:
       ModelAsset:
         path: assets/defaults/models/cube.glb
         uuid: 17154083321347000101
+    PickupEffect:
+      rotationSpeed: 120
+      fallSpeed: 1
+      targetGroundOffset: 1
+      groundCollisionMask: 1
     Uranium: ~
   - Entity: 12890399760630819389
     Name: Rock_Item
     Tag: ""
-    Canis::RectTransform:
-      active: true
-      position: [0, 0]
-      size: [32, 32]
-      scale: [1, 1]
-      originOffset: [0, 0]
-      depth: 0.001
-      rotation: 0
-      parent: 0
-      children:
-        []
     Canis::Transform:
       active: true
-      position: [0, 0.8, -3]
-      rotation: [0.7853982, 0.7853982, 1.5707964]
+      position: [0, 3, -3]
+      rotation: [0, 0, 0]
       scale: [0.5, 0.5, 0.5]
       parent: 0
       children:
@@ -668,4 +645,9 @@ Entities:
       ModelAsset:
         path: assets/defaults/models/cube.glb
         uuid: 17154083321347000101
+    PickupEffect:
+      rotationSpeed: 120
+      fallSpeed: 1
+      targetGroundOffset: 1
+      groundCollisionMask: 1
     Rock: ~
