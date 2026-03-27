@@ -199,6 +199,14 @@ Entities:
         - 13827093107952028852
         - 10873750645405713234
         - 17286928225364034418
+        - 7377036805174250572
+        - 3053170480084548103
+        - 2515569331122740018
+        - 10987995375459984075
+        - 5271650617697713609
+        - 63633359859709481
+        - 522925309843701202
+        - 2569392509680681884
     InventoryBarUI:
       slotCount: 8
       slotSize: 56
@@ -254,7 +262,8 @@ Entities:
       jumpImpulse: 7.5
       groundCheckDistance: 2
       groundCollisionMask: 1
-      scannerCollisionMask: 12
+      blockScannerMask: 4
+      itemScannerMask: 8
       pickupRadius: 1.15
     SuperPupUtilities::Inventory: ~
   - Entity: 4317909316194178768
@@ -1707,6 +1716,622 @@ Entities:
       rotation: 0
       rotationOriginOffset: [0, 0]
       parent: 17286928225364034418
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 7377036805174250572
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 10996912263240144220
+        - 4677415510257766807
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 10996912263240144220
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 7377036805174250572
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 4677415510257766807
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 7377036805174250572
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 3053170480084548103
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [66, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 13656975265272069971
+        - 2761926135041152637
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 13656975265272069971
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 3053170480084548103
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 2761926135041152637
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 3053170480084548103
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 2515569331122740018
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [132, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 13836587539851365597
+        - 4269264863093210935
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 13836587539851365597
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 2515569331122740018
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 4269264863093210935
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 2515569331122740018
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 10987995375459984075
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [198, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 16140679369303652853
+        - 5193731092509526413
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 16140679369303652853
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 10987995375459984075
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 5193731092509526413
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 10987995375459984075
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 5271650617697713609
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [264, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 5476166430615505613
+        - 613421566904226483
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 5476166430615505613
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 5271650617697713609
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 613421566904226483
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 5271650617697713609
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 63633359859709481
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [330, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 15353094894070137287
+        - 3954349580226754081
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 15353094894070137287
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 63633359859709481
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 3954349580226754081
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 63633359859709481
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 522925309843701202
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [396, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 11127910526996044473
+        - 14133025313778675963
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 11127910526996044473
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 522925309843701202
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 14133025313778675963
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 522925309843701202
+      children:
+        []
+    Canis::Text:
+      text: ""
+      color: [1, 1, 1, 1]
+      alignment: 2
+      horizontalBoundary: 0
+      FontAsset:
+        uuid: 14618725492368012463
+        fontSize: 22
+  - Entity: 2569392509680681884
+    Name: Inventory Slot
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [462, 0]
+      size: [56, 56]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [0, 0]
+      pivot: [0, 0]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 6129844738291023402
+      children:
+        - 15102426105354157374
+        - 13875660176487916688
+    Canis::Sprite2D:
+      color: [0.07, 0.09, 0.12, 0.82]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 15102426105354157374
+    Name: Inventory Icon
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-16, -16]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 2569392509680681884
+      children:
+        []
+    Canis::Sprite2D:
+      color: [0, 0, 0, 0]
+      uv: [0, 0, 1, 1]
+      flipX: false
+      flipY: false
+      TextureAsset:
+        uuid: 16060716090729117806
+  - Entity: 13875660176487916688
+    Name: Inventory Count
+    Tag: ""
+    Canis::RectTransform:
+      active: true
+      position: [0, 0]
+      size: [-6, -6]
+      scale: [1, 1]
+      anchorMin: [0, 0]
+      anchorMax: [1, 1]
+      pivot: [0.5, 0.5]
+      originOffset: [0, 0]
+      depth: 0.001
+      rotation: 0
+      rotationOriginOffset: [0, 0]
+      parent: 2569392509680681884
       children:
         []
     Canis::Text:

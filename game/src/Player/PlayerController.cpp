@@ -22,7 +22,8 @@ void RegisterPlayerControllerScript(App& _app)
     REGISTER_PROPERTY(playerConf, PlayerController, jumpImpulse);
     REGISTER_PROPERTY(playerConf, PlayerController, groundCheckDistance);
     REGISTER_PROPERTY(playerConf, PlayerController, groundCollisionMask);
-    REGISTER_PROPERTY(playerConf, PlayerController, scannerCollisionMask);
+    REGISTER_PROPERTY(playerConf, PlayerController, blockScannerMask);
+    REGISTER_PROPERTY(playerConf, PlayerController, itemScannerMask);
     REGISTER_PROPERTY(playerConf, PlayerController, pickupRadius);
     
     DEFAULT_CONFIG_AND_REQUIRED(playerConf, PlayerController, Transform, Rigidbody, CapsuleCollider);
@@ -138,25 +139,27 @@ void PlayerController::Update(float _dt)
     // scanner
     if (m_cameraEntity && m_cameraEntity->HasComponent<Transform>())
     {
-        RaycastHit scannerHit = {};
+        RaycastHit blockHit = {};
+        RaycastHit itemHit = {};
+        std::string message = "";
+        bool interacted = false;
+
         Vector3 cameraRayOrigin = m_cameraEntity->GetComponent<Transform>().GetGlobalPosition();
+        
         if (entity.scene.Raycast(
             cameraRayOrigin,
             m_cameraEntity->GetComponent<Transform>().GetForward(),
-            scannerHit,
+            blockHit,
             100.0f,
-            scannerCollisionMask))
+            blockScannerMask))
         {
-            std::string message = "";
-            bool interacted = false;
-
-            if (I_Block* block = scannerHit.entity->GetScript<I_Block>())
+            if (I_Block* block = blockHit.entity->GetScript<I_Block>())
                 message = block->GetName();
 
-            if (I_Interactable* interactable = scannerHit.entity->GetScript<I_Interactable>()) {
+            if (I_Interactable* interactable = blockHit.entity->GetScript<I_Interactable>()) {
                 const InteractionContext interactionContext = {
                     .interactingEntity = &entity,
-                    .hit = &scannerHit,
+                    .hit = &blockHit,
                 };
                 message = interactable->GetMessage(interactionContext);
                 if (Entity* info = entity.scene.GetEntityWithTag("INFO_TEXT")) {
@@ -172,12 +175,43 @@ void PlayerController::Update(float _dt)
                     }
                 }
             }
-            else if (message != "")
-            {
-                if (Entity* info = entity.scene.GetEntityWithTag("INFO_TEXT"))
+            
+        }
+
+        if (entity.scene.Raycast(
+            cameraRayOrigin,
+            m_cameraEntity->GetComponent<Transform>().GetForward(),
+            itemHit,
+            100.0f,
+            itemScannerMask))
+        {
+            if (I_Interactable* interactable = itemHit.entity->GetScript<I_Interactable>()) {
+                const InteractionContext interactionContext = {
+                    .interactingEntity = &entity,
+                    .hit = &itemHit,
+                };
+                message = interactable->GetMessage(interactionContext);
+                if (Entity* info = entity.scene.GetEntityWithTag("INFO_TEXT")) {
                     if (InfoText* infoText = info->GetScript<InfoText>())
-                        infoText->SetText(message);
+                    {
+                        interacted = interactable->HandleInteraction(interactionContext);
+                        if (interacted == false) {
+                            infoText->SetText(message);
+                        }
+                        else {
+                            infoText->EarlyFadeout();
+                        }
+                    }
+                }
             }
+            
+        }
+
+        if (message != "")
+        {
+            if (Entity* info = entity.scene.GetEntityWithTag("INFO_TEXT"))
+                if (InfoText* infoText = info->GetScript<InfoText>())
+                    infoText->SetText(message);
         }
     }
 }
