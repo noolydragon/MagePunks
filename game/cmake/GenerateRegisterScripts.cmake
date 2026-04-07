@@ -11,89 +11,115 @@ if (DEFINED HEADER_PATHS AND NOT HEADER_PATHS STREQUAL "")
     string(REPLACE "||" ";" header_paths "${HEADER_PATHS}")
 endif()
 
-set(script_includes "")
-set(register_entries "")
-set(unregister_entries "")
+set(generated_includes "")
+set(register_calls "")
+set(unregister_calls "")
 
-foreach(script_header_path IN LISTS header_paths)
-    file(RELATIVE_PATH script_header "${INCLUDE_ROOT}" "${script_header_path}")
+foreach(content_header_path IN LISTS header_paths)
+    file(RELATIVE_PATH content_header "${INCLUDE_ROOT}" "${content_header_path}")
+    file(READ "${content_header_path}" content_header_contents)
 
-    get_filename_component(script_stem "${script_header}" NAME_WE)
-    file(READ "${script_header_path}" script_header_contents)
-
-    if (NOT script_header_contents MATCHES "Register${script_stem}Script[ \t\r\n]*\\(")
-        continue()
-    endif()
-
-    if (NOT script_header_contents MATCHES "UnRegister${script_stem}Script[ \t\r\n]*\\(")
-        continue()
-    endif()
-
-    list(APPEND script_includes "#include <${script_header}>")
-
-    set(script_prefix "")
-
-    if (script_header_contents MATCHES "ScriptName[ \t\r\n]*=[ \t\r\n]*\"([^\"]+)\"")
-        set(script_name "${CMAKE_MATCH_1}")
-        string(FIND "${script_name}" "::" last_namespace_separator REVERSE)
+    set(symbol_prefix "")
+    if (content_header_contents MATCHES "ScriptName[ \t\r\n]*=[ \t\r\n]*\"([^\"]+)\"")
+        set(content_name "${CMAKE_MATCH_1}")
+        string(FIND "${content_name}" "::" last_namespace_separator REVERSE)
         if (NOT last_namespace_separator EQUAL -1)
-            string(SUBSTRING "${script_name}" 0 ${last_namespace_separator} script_namespace)
-            set(script_prefix "${script_namespace}::")
+            string(SUBSTRING "${content_name}" 0 ${last_namespace_separator} content_namespace)
+            set(symbol_prefix "${content_namespace}::")
         endif()
-    elseif (script_header_contents MATCHES "namespace[ \t\r\n]+([A-Za-z_][A-Za-z0-9_:]*)[ \t\r\n]*\\{")
-        set(script_prefix "${CMAKE_MATCH_1}::")
+    elseif (content_header_contents MATCHES "namespace[ \t\r\n]+([A-Za-z_][A-Za-z0-9_:]*)[ \t\r\n]*\\{")
+        set(symbol_prefix "${CMAKE_MATCH_1}::")
     endif()
 
-    list(APPEND register_entries "        &${script_prefix}Register${script_stem}Script,")
-    list(APPEND unregister_entries "        &${script_prefix}UnRegister${script_stem}Script,")
+    set(header_register_calls "")
+    set(header_unregister_calls "")
+
+    foreach(content_kind IN ITEMS Script Component System)
+        set(register_matches "")
+        set(unregister_matches "")
+        set(register_names "")
+        set(unregister_names "")
+
+        string(REGEX MATCHALL "Register[A-Za-z_][A-Za-z0-9_]*${content_kind}[ \t\r\n]*\\(" register_matches "${content_header_contents}")
+        string(REGEX MATCHALL "UnRegister[A-Za-z_][A-Za-z0-9_]*${content_kind}[ \t\r\n]*\\(" unregister_matches "${content_header_contents}")
+
+        foreach(register_match IN LISTS register_matches)
+            string(REGEX REPLACE "[ \t\r\n]*\\(" "" register_name "${register_match}")
+            list(APPEND register_names "${register_name}")
+        endforeach()
+
+        foreach(unregister_match IN LISTS unregister_matches)
+            string(REGEX REPLACE "[ \t\r\n]*\\(" "" unregister_name "${unregister_match}")
+            list(APPEND unregister_names "${unregister_name}")
+        endforeach()
+
+        list(REMOVE_DUPLICATES register_names)
+        list(REMOVE_DUPLICATES unregister_names)
+
+        foreach(register_name IN LISTS register_names)
+            string(REGEX REPLACE "^Register" "UnRegister" unregister_name "${register_name}")
+            list(FIND unregister_names "${unregister_name}" unregister_index)
+            if (unregister_index EQUAL -1)
+                continue()
+            endif()
+
+            list(APPEND header_register_calls "    ${symbol_prefix}${register_name}(_app)")
+            list(APPEND header_unregister_calls "    ${symbol_prefix}${unregister_name}(_app)")
+        endforeach()
+    endforeach()
+
+    if (header_register_calls OR header_unregister_calls)
+        list(APPEND generated_includes "#include <${content_header}>")
+        list(APPEND register_calls ${header_register_calls})
+        list(APPEND unregister_calls ${header_unregister_calls})
+    endif()
 endforeach()
 
-list(SORT script_includes)
-list(SORT register_entries)
-list(SORT unregister_entries)
+list(REMOVE_DUPLICATES generated_includes)
+list(REMOVE_DUPLICATES register_calls)
+list(REMOVE_DUPLICATES unregister_calls)
+list(SORT generated_includes)
+list(SORT register_calls)
+list(SORT unregister_calls)
 
-set(script_includes_text "")
-foreach(script_include IN LISTS script_includes)
-    string(APPEND script_includes_text "${script_include}\n")
-endforeach()
-
-set(register_entries_text "")
-foreach(register_entry IN LISTS register_entries)
-    string(APPEND register_entries_text "${register_entry}\n")
-endforeach()
-
-set(unregister_entries_text "")
-foreach(unregister_entry IN LISTS unregister_entries)
-    string(APPEND unregister_entries_text "${unregister_entry}\n")
+set(generated_includes_text "")
+foreach(generated_include IN LISTS generated_includes)
+    string(APPEND generated_includes_text "${generated_include}\n")
 endforeach()
 
 set(register_calls_text "")
-foreach(register_entry IN LISTS register_entries)
-    string(REGEX REPLACE "^        &" "    " register_call "${register_entry}")
-    string(REGEX REPLACE ",$" "(_app);" register_call "${register_call}")
-    string(APPEND register_calls_text "${register_call}\n")
+foreach(register_call IN LISTS register_calls)
+    string(APPEND register_calls_text "${register_call};\n")
 endforeach()
 
 set(unregister_calls_text "")
-foreach(unregister_entry IN LISTS unregister_entries)
-    string(REGEX REPLACE "^        &" "    " unregister_call "${unregister_entry}")
-    string(REGEX REPLACE ",$" "(_app);" unregister_call "${unregister_call}")
-    string(APPEND unregister_calls_text "${unregister_call}\n")
+foreach(unregister_call IN LISTS unregister_calls)
+    string(APPEND unregister_calls_text "${unregister_call};\n")
 endforeach()
 
 set(generated_source
 "// This file is generated by CMake. Do not edit by hand.
 #pragma once
 
-${script_includes_text}
+${generated_includes_text}
 
-inline void RegisterGeneratedScripts(Canis::App &_app)
+inline void RegisterGeneratedGameContent(Canis::App &_app)
 {
 ${register_calls_text}}
 
-inline void UnRegisterGeneratedScripts(Canis::App &_app)
+inline void UnRegisterGeneratedGameContent(Canis::App &_app)
 {
 ${unregister_calls_text}}
+
+inline void RegisterGeneratedScripts(Canis::App &_app)
+{
+    RegisterGeneratedGameContent(_app);
+}
+
+inline void UnRegisterGeneratedScripts(Canis::App &_app)
+{
+    UnRegisterGeneratedGameContent(_app);
+}
 ")
 
 if (EXISTS "${OUTPUT_FILE}")
