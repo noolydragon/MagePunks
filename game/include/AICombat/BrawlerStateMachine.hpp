@@ -58,6 +58,10 @@ namespace AICombat
         int maxHealth = 40;
         bool logStateChanges = true;
         Canis::Entity* hammerVisual = nullptr;
+        Canis::AudioAssetHandle hitSfxPath1 = { .path = "assets/audio/sfx/hit_1.ogg" };
+        Canis::AudioAssetHandle hitSfxPath2 = { .path = "assets/audio/sfx/hit_2.ogg" };
+        float hitSfxVolume = 1.0f;
+        Canis::SceneAssetHandle deathEffectPrefab = { .path = "assets/prefabs/brawler_death_particles.scene" };
 
         explicit BrawlerStateMachine(Canis::Entity& _entity);
 
@@ -86,10 +90,14 @@ namespace AICombat
         bool IsAlive() const;
 
     private:
+        void PlayHitSfx();
+        void SpawnDeathEffect();
+
         int m_currentHealth = 0;
         float m_stateTime = 0.0f;
         Canis::Vector4 m_baseColor = Canis::Vector4(1.0f);
         bool m_hasBaseColor = false;
+        bool m_useFirstHitSfx = true;
     };
 
     void RegisterBrawlerStateMachineScript(Canis::App& _app);

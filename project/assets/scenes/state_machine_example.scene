@@ -2,6 +2,8 @@ Environment:
   ClearColor: [0.08, 0.1, 0.14, 1]
   SkyboxAsset:
     uuid: 9041318343503679699
+  PostProcessAsset:
+    uuid: 1651863902076402666
 Entities:
   - Entity: 920001
     Name: Camera
@@ -167,12 +169,22 @@ Entities:
       detectionRange: 20
       bodyColliderSize: [1, 1, 1]
       moveSpeed: 3.4
+      hammerRestDegrees: 140
+      hammerSwingDegrees: -120
       attackRange: 2.2
       attackDuration: 0.75
       attackDamageTime: 0.24
       maxHealth: 40
       logStateChanges: true
       hammerVisual: 11979571633178964622
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 0.1
+      deathEffectPrefab: 15098671527380424011
   - Entity: 920101
     Name: Blue Hammer Handle
     Tag: ""
@@ -237,12 +249,22 @@ Entities:
       detectionRange: 20
       bodyColliderSize: [1, 1, 1]
       moveSpeed: 3.4
+      hammerRestDegrees: 140
+      hammerSwingDegrees: -120
       attackRange: 2.2
       attackDuration: 0.75
       attackDamageTime: 0.24
       maxHealth: 40
       logStateChanges: true
       hammerVisual: 17922756738381035608
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 0.1
+      deathEffectPrefab: 15098671527380424011
   - Entity: 17922756738381035608
     Name: Right Hand Root
     Tag: ""

@@ -19,6 +19,6 @@ passes:
     shader:
       path: assets/shaders/postprocess_color_correction.vs
     settings:
-      exposure: 0.9
-      contrast: 1.27
+      exposure: 1.59
+      contrast: 1
       saturation: 1.36

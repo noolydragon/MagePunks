@@ -1,0 +1,40 @@
+Environment:
+  ClearColor: [0.08, 0.1, 0.14, 1]
+Entities:
+  - Entity: 930001
+    Name: BrawlerDeathParticles
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0, 0, 0]
+      rotation: [0, 0, 0]
+      scale: [1, 1, 1]
+      parent: 0
+      children:
+        []
+    Canis::ParticleEmitter:
+      playOnStart: true
+      looping: false
+      burstMode: true
+      destroyEntityWhenDone: true
+      localSpace: false
+      burstCount: 22
+      spawnCount: 2
+      emissionDuration: 0.08
+      spawnInterval: 0.03
+      particleLifetime: 0.65
+      gravity: -3.8
+      drag: 2.4
+      speedMin: 1.5
+      speedMax: 4.2
+      spawnExtents: [0.22, 0.22, 0.22]
+      minVelocity: [-1.0, -0.15, -1.0]
+      maxVelocity: [1.0, 1.35, 1.0]
+      startScaleMin: [0.07, 0.07, 0.07]
+      startScaleMax: [0.16, 0.16, 0.16]
+      endScale: [0.01, 0.01, 0.01]
+      startColor: [1, 0.42, 0.34, 1]
+      endColor: [0.14, 0.02, 0.02, 0]
+      modelPath: assets/defaults/models/cube.glb
+      materialPath: assets/defaults/materials/default.material
+      castShadow: false

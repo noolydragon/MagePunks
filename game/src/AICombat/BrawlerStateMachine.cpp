@@ -1,6 +1,7 @@
 #include <AICombat/BrawlerStateMachine.hpp>
 
 #include <Canis/App.hpp>
+#include <Canis/AudioManager.hpp>
 #include <Canis/ConfigHelper.hpp>
 #include <Canis/Debug.hpp>
 
@@ -123,6 +124,10 @@ namespace AICombat
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, maxHealth);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, logStateChanges);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hammerVisual);
+        REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hitSfxPath1);
+        REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hitSfxPath2);
+        REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hitSfxVolume);
+        REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, deathEffectPrefab);
 
         DEFAULT_CONFIG_AND_REQUIRED(
             brawlerStateMachineConf,
@@ -133,11 +138,7 @@ namespace AICombat
             Canis::Rigidbody,
             Canis::BoxCollider);
 
-        brawlerStateMachineConf.DEFAULT_DRAW_INSPECTOR(
-            AICombat::BrawlerStateMachine,
-            ImGui::Text("Current State: %s", component->GetCurrentStateName().c_str());
-            ImGui::Text("Health: %d / %d", component->GetCurrentHealth(), component->maxHealth);
-        );
+        brawlerStateMachineConf.DEFAULT_DRAW_INSPECTOR(AICombat::BrawlerStateMachine);
 
         _app.RegisterScript(brawlerStateMachineConf);
     }
@@ -174,6 +175,7 @@ namespace AICombat
 
         m_currentHealth = std::max(maxHealth, 1);
         m_stateTime = 0.0f;
+        m_useFirstHitSfx = true;
 
         ClearStates();
         AddState(idleState);
@@ -339,7 +341,12 @@ namespace AICombat
         if (!IsAlive())
             return;
 
-        m_currentHealth = std::max(0, m_currentHealth - std::max(_damage, 0));
+        const int damageToApply = std::max(_damage, 0);
+        if (damageToApply <= 0)
+            return;
+
+        m_currentHealth = std::max(0, m_currentHealth - damageToApply);
+        PlayHitSfx();
 
         if (m_hasBaseColor && entity.HasComponent<Canis::Material>())
         {
@@ -361,7 +368,39 @@ namespace AICombat
         if (logStateChanges)
             Canis::Debug::Log("%s was defeated.", entity.name.c_str());
 
+        SpawnDeathEffect();
         entity.Destroy();
+    }
+
+    void BrawlerStateMachine::PlayHitSfx()
+    {
+        const Canis::AudioAssetHandle& selectedSfx = m_useFirstHitSfx ? hitSfxPath1 : hitSfxPath2;
+        m_useFirstHitSfx = !m_useFirstHitSfx;
+
+        if (selectedSfx.Empty())
+            return;
+
+        Canis::AudioManager::PlaySFX(selectedSfx, std::clamp(hitSfxVolume, 0.0f, 1.0f));
+    }
+
+    void BrawlerStateMachine::SpawnDeathEffect()
+    {
+        if (deathEffectPrefab.Empty() || !entity.HasComponent<Canis::Transform>())
+            return;
+
+        const Canis::Transform& sourceTransform = entity.GetComponent<Canis::Transform>();
+        const Canis::Vector3 spawnPosition = sourceTransform.GetGlobalPosition();
+        const Canis::Vector3 spawnRotation = sourceTransform.GetGlobalRotation();
+
+        for (Canis::Entity* spawnedEntity : entity.scene.Instantiate(deathEffectPrefab))
+        {
+            if (spawnedEntity == nullptr || !spawnedEntity->HasComponent<Canis::Transform>())
+                continue;
+
+            Canis::Transform& spawnedTransform = spawnedEntity->GetComponent<Canis::Transform>();
+            spawnedTransform.position = spawnPosition;
+            spawnedTransform.rotation = spawnRotation;
+        }
     }
 
     bool BrawlerStateMachine::IsAlive() const
