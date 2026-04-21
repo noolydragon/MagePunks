@@ -122,6 +122,7 @@ namespace AICombat
         RegisterAccessorProperty(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hammerTimeState, attackDuration);
         RegisterAccessorProperty(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hammerTimeState, attackDamageTime);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, maxHealth);
+        REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, currentHealth);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, logStateChanges);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hammerVisual);
         REGISTER_PROPERTY(brawlerStateMachineConf, AICombat::BrawlerStateMachine, hitSfxPath1);
@@ -173,7 +174,7 @@ namespace AICombat
             m_hasBaseColor = true;
         }
 
-        m_currentHealth = std::max(maxHealth, 1);
+        currentHealth = std::max(maxHealth, 1);
         m_stateTime = 0.0f;
         m_useFirstHitSfx = true;
 
@@ -313,7 +314,7 @@ namespace AICombat
 
     int BrawlerStateMachine::GetCurrentHealth() const
     {
-        return m_currentHealth;
+        return currentHealth;
     }
 
     void BrawlerStateMachine::ResetHammerPose()
@@ -345,14 +346,14 @@ namespace AICombat
         if (damageToApply <= 0)
             return;
 
-        m_currentHealth = std::max(0, m_currentHealth - damageToApply);
+        currentHealth = std::max(0, currentHealth - damageToApply);
         PlayHitSfx();
 
         if (m_hasBaseColor && entity.HasComponent<Canis::Material>())
         {
             Canis::Material& material = entity.GetComponent<Canis::Material>();
             const float healthRatio = (maxHealth > 0)
-                ? (static_cast<float>(m_currentHealth) / static_cast<float>(maxHealth))
+                ? (static_cast<float>(currentHealth) / static_cast<float>(maxHealth))
                 : 0.0f;
 
             material.color = Canis::Vector4(
@@ -362,7 +363,7 @@ namespace AICombat
                 m_baseColor.w);
         }
 
-        if (m_currentHealth > 0)
+        if (currentHealth > 0)
             return;
 
         if (logStateChanges)
@@ -405,6 +406,6 @@ namespace AICombat
 
     bool BrawlerStateMachine::IsAlive() const
     {
-        return m_currentHealth > 0;
+        return currentHealth > 0;
     }
 }

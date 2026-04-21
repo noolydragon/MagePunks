@@ -56,6 +56,7 @@ namespace AICombat
         float detectionRange = 20.0f;
         Canis::Vector3 bodyColliderSize = Canis::Vector3(1.0f);
         int maxHealth = 40;
+        int currentHealth = 0;
         bool logStateChanges = true;
         Canis::Entity* hammerVisual = nullptr;
         Canis::AudioAssetHandle hitSfxPath1 = { .path = "assets/audio/sfx/hit_1.ogg" };
@@ -93,7 +94,6 @@ namespace AICombat
         void PlayHitSfx();
         void SpawnDeathEffect();
 
-        int m_currentHealth = 0;
         float m_stateTime = 0.0f;
         Canis::Vector4 m_baseColor = Canis::Vector4(1.0f);
         bool m_hasBaseColor = false;
