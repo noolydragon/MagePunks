@@ -1,5 +1,5 @@
 #include <SuperPupUtilities/Bullet.hpp>
-
+#include <AICombat/MageStateMachine.hpp>
 #include <Canis/App.hpp>
 #include <Canis/ConfigHelper.hpp>
 
@@ -234,6 +234,11 @@ namespace SuperPupUtilities
             hit.entity->GetComponent<Canis::Rigidbody>().AddForce(
                 direction * hitImpulse,
                 Canis::Rigidbody3DForceMode::IMPULSE);
+        }
+
+        if (auto* mage = hit.entity->GetScript<AICombat::MageStateMachine>())
+        {
+            mage->TakeDamage(damage);
         }
 
         if (destroyOnImpact)

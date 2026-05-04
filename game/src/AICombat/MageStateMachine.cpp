@@ -3,6 +3,9 @@
 #include <Canis/App.hpp>
 #include <Canis/AudioManager.hpp>
 #include <Canis/ConfigHelper.hpp>
+#include <SuperPupUtilities/Bullet.hpp>
+#include <SuperPupUtilities/SimpleObjectPool.hpp>
+
 #include <Canis/Debug.hpp>
 
 #include <algorithm>
@@ -39,27 +42,56 @@ namespace AICombat
 
     void WandState::Enter()
     {
-        if (MageStateMachine* mageStatMachine = dynamic_cast<MageStateMachine*>(m_stateMachine))
-            mageStatMachine->SetHammerSwing(0.0f);
+        if (auto* mage = dynamic_cast<MageStateMachine*>(m_stateMachine)) {
+            mage->hasFired = false;
+            mage->ResetHammerPose();
+        }
     }
 
-    void WandState::Update(float)
+    void WandState::Update(float _dt)
     {
-        MageStateMachine* mageStatMachine = dynamic_cast<MageStateMachine*>(m_stateMachine);
-        if (mageStatMachine == nullptr)
+        MageStateMachine* mage = dynamic_cast<MageStateMachine*>(m_stateMachine);
+        if (mage == nullptr)
             return;
 
-        if (Canis::Entity* target = mageStatMachine->FindClosestTarget())
-            mageStatMachine->FaceTarget(*target);
-
-        const float duration = std::max(attackDuration, 0.001f);
-        mageStatMachine->SetHammerSwing(mageStatMachine->GetStateTime() / duration);
-
-        if (mageStatMachine->GetStateTime() < duration)
+        Canis::Entity* target = mage->FindClosestTarget();
+        if (!target) {
+            mage->ChangeState(SearchState::Name);
             return;
+        }
 
-        if (mageStatMachine->FindClosestTarget() == nullptr)
-            mageStatMachine->ChangeState(SearchState::Name);
+        mage->FaceTarget(*target);
+
+        if (mage->GetStateTime() >= 0.5f && !mage->hasFired)
+        {
+            auto* pool = SuperPupUtilities::SimpleObjectPool::Instance; 
+            if (pool && !mage->bulletPrefab.Empty() && mage->wandTipEntity)
+            {
+                Canis::Transform& tipTransform = mage->wandTipEntity->GetComponent<Canis::Transform>();
+
+                Canis::Entity* bulletEnt = pool->Spawn("magic_bullet", tipTransform.GetGlobalPosition(), tipTransform.GetGlobalRotation());
+
+                if (bulletEnt)
+                {
+                    if (auto* bullet = bulletEnt->GetScript<SuperPupUtilities::Bullet>())
+                    {
+                        bullet->speed = mage->bulletSpeed;
+                        bullet->damage = mage->bulletDamage;
+                        bullet->targetTags = { mage->targetTag };
+                        bullet->destroyOnImpact = true;
+                        bullet->Launch();
+                    }
+                    mage->hasFired = true;
+                }
+            }
+            else if (!mage->wandTipEntity)
+            {
+                Canis::Debug::Warning("Mage: wandTipEntity is null Can't spawn beam.");
+            }
+        }
+
+        if (mage->GetStateTime() >= attackDuration)
+            mage->ChangeState(SearchState::Name);
     }
 
     void WandState::Exit()
@@ -80,9 +112,11 @@ namespace AICombat
         REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, bodyColliderSize);
         RegisterAccessorProperty(mageStateMachineConf, AICombat::MageStateMachine, wandState, hammerRestDegrees);
         RegisterAccessorProperty(mageStateMachineConf, AICombat::MageStateMachine, wandState, hammerSwingDegrees);
-        RegisterAccessorProperty(mageStateMachineConf, AICombat::MageStateMachine, wandState, attackRange);
         RegisterAccessorProperty(mageStateMachineConf, AICombat::MageStateMachine, wandState, attackDuration);
-        RegisterAccessorProperty(mageStateMachineConf, AICombat::MageStateMachine, wandState, attackDamageTime);
+        REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, bulletPrefab);
+        REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, bulletSpeed);
+        REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, bulletDamage);
+        REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, wandTipEntity);
         REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, maxHealth);
         REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, currentHealth);
         REGISTER_PROPERTY(mageStateMachineConf, AICombat::MageStateMachine, logStateChanges);
@@ -266,11 +300,6 @@ namespace AICombat
     float MageStateMachine::GetStateTime() const
     {
         return m_stateTime;
-    }
-
-    float MageStateMachine::GetAttackRange() const
-    {
-        return wandState.attackRange;
     }
 
     int MageStateMachine::GetCurrentHealth() const

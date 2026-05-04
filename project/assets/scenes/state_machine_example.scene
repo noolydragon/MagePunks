@@ -402,7 +402,7 @@ Entities:
       targetTag: Blue
   - Entity: 15097792905166347398
     Name: Blue Mage
-    Tag: ""
+    Tag: Blue
     Canis::Transform:
       active: true
       position: [-3.5853882, 1.1220181, 3.7559624]
@@ -410,36 +410,130 @@ Entities:
       scale: [1, 1, 1]
       parent: 0
       children:
-        []
+        - 15643594594930085584
+    Canis::Rigidbody:
+      active: true
+      motionType: 1
+      mass: 1
+      friction: 0.2
+      restitution: 0
+      linearDamping: 0.05
+      angularDamping: 0.05
+      useGravity: false
+      isSensor: false
+      layer: 4
+      mask: 21
+      allowSleeping: false
+      lockRotationX: false
+      lockRotationY: false
+      lockRotationZ: false
+      linearVelocity: [0, 0, 0]
+      angularVelocity: [0, 0, 0]
+    Canis::BoxCollider:
+      active: true
+      size: [1, 1, 1]
+    Canis::SphereCollider:
+      active: true
+      radius: 0.5
     Canis::Material:
-      color: [0.26842144, 0, 0.48728812, 1]
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
       MaterialAsset:
         uuid: 17490362529814420531
     Canis::Model:
-      color: [1, 1, 1, 1]
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
       ModelAsset:
         uuid: 17154083321347000102
-  - Entity: 4548342662604780206
+    AICombat::MageStateMachine:
+      targetTag: Red
+      detectionRange: 40
+      bodyColliderSize: [1, 1, 1]
+      hammerRestDegrees: 270
+      hammerSwingDegrees: -45
+      attackDuration: 5
+      bulletPrefab: 979425066757991459
+      bulletSpeed: 20
+      bulletDamage: 10
+      wandTipEntity: 17253507122403037525
+      maxHealth: 40
+      currentHealth: 0
+      logStateChanges: true
+      hammerVisual: 15643594594930085584
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 1
+      deathEffectPrefab: 1932126691914227009
+  - Entity: 17064277173716751986
     Name: Red Mage
-    Tag: ""
+    Tag: Red
     Canis::Transform:
       active: true
-      position: [3.4893188, 1.1220181, 3.7559624]
+      position: [3.2457793, 1.1220181, 3.7559624]
       rotation: [0, -0, 0]
       scale: [1, 1, 1]
       parent: 0
       children:
-        []
+        - 5631948063998026252
+    Canis::Rigidbody:
+      active: true
+      motionType: 1
+      mass: 1
+      friction: 0.2
+      restitution: 0
+      linearDamping: 0.05
+      angularDamping: 0.05
+      useGravity: false
+      isSensor: false
+      layer: 4
+      mask: 11
+      allowSleeping: false
+      lockRotationX: false
+      lockRotationY: false
+      lockRotationZ: false
+      linearVelocity: [0, 0, 0]
+      angularVelocity: [0, 0, 0]
+    Canis::BoxCollider:
+      active: true
+      size: [1, 1, 1]
+    Canis::SphereCollider:
+      active: true
+      radius: 0.5
     Canis::Material:
-      color: [0.48728812, 0, 0.30971712, 1]
+      color: [1, 0, 0, 1]
       MaterialAsset:
         uuid: 17490362529814420531
     Canis::Model:
-      color: [1, 1, 1, 1]
+      color: [1, 0, 0, 1]
       ModelAsset:
         uuid: 17154083321347000102
+    AICombat::MageStateMachine:
+      targetTag: Blue
+      detectionRange: 40
+      bodyColliderSize: [1, 1, 1]
+      hammerRestDegrees: 270
+      hammerSwingDegrees: -45
+      attackDuration: 5
+      bulletPrefab: 979425066757991459
+      bulletSpeed: 20
+      bulletDamage: 10
+      wandTipEntity: 14205358550856480602
+      maxHealth: 40
+      currentHealth: 0
+      logStateChanges: true
+      hammerVisual: 5631948063998026252
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 1
+      deathEffectPrefab: 1932126691914227009
   - Entity: 18078205289571281392
-    Name: Blue Brawler
+    Name: Big Blue
     Tag: Blue
     Canis::Transform:
       active: true
@@ -577,7 +671,7 @@ Entities:
       damage: 20
       targetTag: Red
   - Entity: 10113615147790594066
-    Name: Red Brawler
+    Name: Big Red
     Tag: Red
     Canis::Transform:
       active: true
@@ -714,3 +808,555 @@ Entities:
       color: [0.78, 0.9, 1, 1]
       ModelAsset:
         uuid: 17154083321347000101
+  - Entity: 15915677793105228825
+    Name: WandStick
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 0.680112, -0.004402399]
+      rotation: [0, 0, 0]
+      scale: [0.25, 0.75, 0.25]
+      parent: 15643594594930085584
+      children:
+        []
+    Canis::Material:
+      color: [0.279661, 0.23065405, 0.18486066, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 1, 1, 1]
+      ModelAsset:
+        uuid: 17154083321347000103
+  - Entity: 5281107369391069697
+    Name: Crystal
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [0.7853982, 0, 0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15643594594930085584
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 15643594594930085584
+    Name: WandRoot
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0.52398825, 0.10112369, 0.09148955]
+      rotation: [0, 0, 0]
+      scale: [1, 1, 1]
+      parent: 15097792905166347398
+      children:
+        - 15915677793105228825
+        - 5281107369391069697
+        - 12603757500921087589
+        - 1082083110696444128
+        - 17253507122403037525
+  - Entity: 12603757500921087589
+    Name: Crystal2
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [-0.7853982, 0, -0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15643594594930085584
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 1082083110696444128
+    Name: Crystal3
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [1.5707964, -0.7853982, 1.5707964]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15643594594930085584
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.54901963, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 5631948063998026252
+    Name: WandRoot
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.39116788, 0.10112369, 0.09148955]
+      rotation: [0, 0, 0]
+      scale: [1, 1, 1]
+      parent: 17064277173716751986
+      children:
+        - 10010460973369557115
+        - 1147963487150052166
+        - 15164990422962042876
+        - 6313276735573112932
+        - 14205358550856480602
+  - Entity: 10010460973369557115
+    Name: WandStick
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 0.680112, -0.004402399]
+      rotation: [0, 0, 0]
+      scale: [0.25, 0.75, 0.25]
+      parent: 5631948063998026252
+      children:
+        []
+    Canis::Material:
+      color: [0.279661, 0.23065405, 0.18486066, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 1, 1, 1]
+      ModelAsset:
+        uuid: 17154083321347000103
+  - Entity: 1147963487150052166
+    Name: Crystal
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [0.7853982, 0, 0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 5631948063998026252
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 15164990422962042876
+    Name: Crystal2
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [-0.7853982, 0, -0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 5631948063998026252
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 6313276735573112932
+    Name: Crystal3
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [1.5707964, -0.7853982, 1.5707964]
+      scale: [0.25, 0.46, 0.25]
+      parent: 5631948063998026252
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 17253507122403037525
+    Name: SpawnLaser
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0, 2, 0]
+      rotation: [1.5707964, -0, 0]
+      scale: [1, 1, 1]
+      parent: 15643594594930085584
+      children:
+        []
+  - Entity: 14205358550856480602
+    Name: SpawnLaser
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0, 2, 0]
+      rotation: [1.5707964, 0, 0]
+      scale: [1, 1, 1]
+      parent: 5631948063998026252
+      children:
+        []
+  - Entity: 15499880363873479214
+    Name: Pool
+    Tag: ""
+    SuperPupUtilities::SimpleObjectPool:
+      logWarnings: true
+      pools:
+        - code: magic_bullet
+          prefab: 979425066757991459
+          size: 8
+        - code: magic_heal
+          prefab: 15745624773902259115
+          size: 8
+  - Entity: 547905426233242504
+    Name: Blue Healer
+    Tag: Blue
+    Canis::Transform:
+      active: true
+      position: [-6.9902105, 1.1220181, 0.22206116]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+      parent: 0
+      children:
+        - 17279824764819985886
+    Canis::Rigidbody:
+      active: true
+      motionType: 1
+      mass: 1
+      friction: 0.2
+      restitution: 0
+      linearDamping: 0.05
+      angularDamping: 0.05
+      useGravity: false
+      isSensor: false
+      layer: 4
+      mask: 21
+      allowSleeping: false
+      lockRotationX: false
+      lockRotationY: false
+      lockRotationZ: false
+      linearVelocity: [0, 0, 0]
+      angularVelocity: [0, 0, 0]
+    Canis::BoxCollider:
+      active: true
+      size: [1, 1, 1]
+    Canis::SphereCollider:
+      active: true
+      radius: 0.5
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000102
+    AICombat::MageStateMachine:
+      targetTag: Blue
+      detectionRange: 40
+      bodyColliderSize: [1, 1, 1]
+      hammerRestDegrees: 270
+      hammerSwingDegrees: -45
+      attackDuration: 3
+      bulletPrefab: 15745624773902259115
+      bulletSpeed: 20
+      bulletDamage: -10
+      wandTipEntity: 1017351008555558156
+      maxHealth: 40
+      currentHealth: 0
+      logStateChanges: true
+      hammerVisual: 17279824764819985886
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 1
+      deathEffectPrefab: 1932126691914227009
+  - Entity: 17279824764819985886
+    Name: WandRoot
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0.52398825, 0.10112369, 0.09148955]
+      rotation: [0, 0, 0]
+      scale: [1, 1, 1]
+      parent: 547905426233242504
+      children:
+        - 12354451976920244909
+        - 16520426587876233314
+        - 1789828470588147791
+        - 2751211445849679804
+        - 1017351008555558156
+  - Entity: 12354451976920244909
+    Name: WandStick
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 0.680112, -0.004402399]
+      rotation: [0, 0, 0]
+      scale: [0.25, 0.75, 0.25]
+      parent: 17279824764819985886
+      children:
+        []
+    Canis::Material:
+      color: [0.279661, 0.23065405, 0.18486066, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 1, 1, 1]
+      ModelAsset:
+        uuid: 17154083321347000103
+  - Entity: 16520426587876233314
+    Name: Crystal
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [0.7853982, 0, 0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 17279824764819985886
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 1789828470588147791
+    Name: Crystal2
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [-0.7853982, 0, -0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 17279824764819985886
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.5803922, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 2751211445849679804
+    Name: Crystal3
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [1.5707964, -0.7853982, 1.5707964]
+      scale: [0.25, 0.46, 0.25]
+      parent: 17279824764819985886
+      children:
+        []
+    Canis::Material:
+      color: [0.23921569, 0.5803922, 0.98039216, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [0.23921569, 0.54901963, 0.98039216, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 1017351008555558156
+    Name: SpawnLaser
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0, 2, 0]
+      rotation: [1.5707964, -0, 0]
+      scale: [1, 1, 1]
+      parent: 17279824764819985886
+      children:
+        []
+  - Entity: 5436807533528122824
+    Name: Red Healer
+    Tag: Red
+    Canis::Transform:
+      active: true
+      position: [6.606727, 1.1220181, 0.24061465]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+      parent: 0
+      children:
+        - 15517291679834338328
+    Canis::Rigidbody:
+      active: true
+      motionType: 1
+      mass: 1
+      friction: 0.2
+      restitution: 0
+      linearDamping: 0.05
+      angularDamping: 0.05
+      useGravity: false
+      isSensor: false
+      layer: 4
+      mask: 11
+      allowSleeping: false
+      lockRotationX: false
+      lockRotationY: false
+      lockRotationZ: false
+      linearVelocity: [0, 0, 0]
+      angularVelocity: [0, 0, 0]
+    Canis::BoxCollider:
+      active: true
+      size: [1, 1, 1]
+    Canis::SphereCollider:
+      active: true
+      radius: 0.5
+    Canis::Material:
+      color: [1, 0, 0, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000102
+    AICombat::MageStateMachine:
+      targetTag: Red
+      detectionRange: 40
+      bodyColliderSize: [1, 1, 1]
+      hammerRestDegrees: 270
+      hammerSwingDegrees: -45
+      attackDuration: 3
+      bulletPrefab: 15745624773902259115
+      bulletSpeed: 20
+      bulletDamage: -10
+      wandTipEntity: 11320259598682481986
+      maxHealth: 40
+      currentHealth: 0
+      logStateChanges: true
+      hammerVisual: 15517291679834338328
+      hitSfxPath1:
+        uuid: 9101673412543458587
+        path: assets/audio/sfx/hit_1.ogg
+      hitSfxPath2:
+        uuid: 15814014518013310489
+        path: assets/audio/sfx/hit_2.ogg
+      hitSfxVolume: 1
+      deathEffectPrefab: 1932126691914227009
+  - Entity: 15517291679834338328
+    Name: WandRoot
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.39116788, 0.10112369, 0.09148955]
+      rotation: [0, 0, 0]
+      scale: [1, 1, 1]
+      parent: 5436807533528122824
+      children:
+        - 1883326302911189137
+        - 11898019342194792607
+        - 3467580995172218281
+        - 6719562221526553913
+        - 11320259598682481986
+  - Entity: 1883326302911189137
+    Name: WandStick
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 0.680112, -0.004402399]
+      rotation: [0, 0, 0]
+      scale: [0.25, 0.75, 0.25]
+      parent: 15517291679834338328
+      children:
+        []
+    Canis::Material:
+      color: [0.279661, 0.23065405, 0.18486066, 1]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 1, 1, 1]
+      ModelAsset:
+        uuid: 17154083321347000103
+  - Entity: 11898019342194792607
+    Name: Crystal
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [0.7853982, 0, 0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15517291679834338328
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 3467580995172218281
+    Name: Crystal2
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [-0.7853982, 0, -0.7853982]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15517291679834338328
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 6719562221526553913
+    Name: Crystal3
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [-0.022972584, 1.355112, -0.004402399]
+      rotation: [1.5707964, -0.7853982, 1.5707964]
+      scale: [0.25, 0.46, 0.25]
+      parent: 15517291679834338328
+      children:
+        []
+    Canis::Material:
+      color: [1, 0, 0, 0.3529412]
+      MaterialAsset:
+        uuid: 17490362529814420531
+    Canis::Model:
+      color: [1, 0, 0, 1]
+      ModelAsset:
+        uuid: 17154083321347000101
+  - Entity: 11320259598682481986
+    Name: SpawnLaser
+    Tag: ""
+    Canis::Transform:
+      active: true
+      position: [0, 2, 0]
+      rotation: [1.5707964, 0, 0]
+      scale: [1, 1, 1]
+      parent: 15517291679834338328
+      children:
+        []

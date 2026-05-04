@@ -13,7 +13,7 @@ namespace AICombat
     class SearchState : public SuperPupUtilities::State
     {
     public:
-        static constexpr const char* Name = "IdleState";
+        static constexpr const char* Name = "SearchState";
 
         explicit SearchState(SuperPupUtilities::StateMachine& _stateMachine);
         void Enter() override;
@@ -26,9 +26,8 @@ namespace AICombat
         static constexpr const char* Name = "WandState";
         float hammerRestDegrees = 140.0f;
         float hammerSwingDegrees = -120.0f;
-        float attackRange = 2.25f;
         float attackDuration = 0.75f;
-        float attackDamageTime = 0.25f;
+        float fireDelay = 0.5f;
 
         explicit WandState(SuperPupUtilities::StateMachine& _stateMachine);
         void Enter() override;
@@ -40,6 +39,11 @@ namespace AICombat
     {
     public:
         static constexpr const char* ScriptName = "AICombat::MageStateMachine";
+
+        Canis::SceneAssetHandle bulletPrefab = { .path = "assets/prefabs/magic_bullet.scene" };
+        float bulletSpeed = 20.0f;
+        int bulletDamage = 10;
+        Canis::Entity* wandTipEntity = nullptr;
 
         std::string targetTag = "";
         float detectionRange = 20.0f;
@@ -77,6 +81,7 @@ namespace AICombat
         void SetHammerSwing(float _normalized);
         void TakeDamage(int _damage);
         bool IsAlive() const;
+        bool hasFired = false;
 
     private:
         void PlayHitSfx();
