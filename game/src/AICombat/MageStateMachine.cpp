@@ -190,8 +190,23 @@ namespace AICombat
 
     void MageStateMachine::Update(float _dt)
     {
-        if (!IsAlive())
-            return;
+        if (!IsAlive()) return;
+
+        if (entity.HasComponent<Canis::Material>())
+        {
+            Canis::Material& material = entity.GetComponent<Canis::Material>();
+            float healthRatio = (maxHealth > 0) ? ((float)currentHealth / (float)maxHealth) : 0.0f;
+            float brightness = 0.5f + (0.5f * healthRatio);
+
+            Canis::Vector4 targetColor = Canis::Vector4(
+                m_baseColor.x * brightness,
+                m_baseColor.y * brightness,
+                m_baseColor.z * brightness,
+                m_baseColor.w
+            );
+            float lerpFactor = std::clamp(_dt * 8.0f, 0.0f, 1.0f); // 8.0f makes the flash snappier
+            material.color = material.color + (targetColor - material.color) * lerpFactor;
+        }
 
         m_stateTime += _dt;
         SuperPupUtilities::StateMachine::Update(_dt);
@@ -332,7 +347,18 @@ namespace AICombat
         if (!IsAlive())
             return;
 
-        const int damageToApply = std::max(_damage, 0);
+        if (_damage < 0)
+        {
+            currentHealth = std::min(maxHealth, currentHealth - _damage);
+
+            if (entity.HasComponent<Canis::Material>())
+            {
+                entity.GetComponent<Canis::Material>().color = Canis::Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+            }
+            return;
+        }
+
+        const int damageToApply = _damage;
         if (damageToApply <= 0)
             return;
 

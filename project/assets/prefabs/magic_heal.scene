@@ -26,7 +26,7 @@ Entities:
       ModelAsset:
         uuid: 17154083321347000101
     SuperPupUtilities::Bullet:
-      damage: -10
+      damage: 2
       speed: 14
       lifeTime: 4
       gravity: 0

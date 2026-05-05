@@ -8,68 +8,67 @@
 
 namespace AICombat
 {
-    class MageStateMachine;
+    class HealerStateMachine;
 
-    class SearchState : public SuperPupUtilities::State
+    class SelectState : public SuperPupUtilities::State
     {
     public:
-        static constexpr const char* Name = "SearchState";
+        static constexpr const char* Name = "SelectState";
 
-        explicit SearchState(SuperPupUtilities::StateMachine& _stateMachine);
+        explicit SelectState(SuperPupUtilities::StateMachine& _stateMachine);
         void Enter() override;
         void Update(float _dt) override;
     };
 
-    class WandState : public SuperPupUtilities::State
+    class HealState : public SuperPupUtilities::State
     {
     public:
-        static constexpr const char* Name = "WandState";
+        static constexpr const char* Name = "HealState";
         float hammerRestDegrees = 140.0f;
         float hammerSwingDegrees = -120.0f;
         float attackDuration = 0.75f;
         float fireDelay = 0.5f;
 
-        explicit WandState(SuperPupUtilities::StateMachine& _stateMachine);
+        explicit HealState(SuperPupUtilities::StateMachine& _stateMachine);
         void Enter() override;
         void Update(float _dt) override;
         void Exit() override;
     };
 
-    class MageStateMachine : public SuperPupUtilities::StateMachine
+    class HealerStateMachine : public SuperPupUtilities::StateMachine
     {
     public:
-        static constexpr const char* ScriptName = "AICombat::MageStateMachine";
+        static constexpr const char* ScriptName = "AICombat::HealerStateMachine";
 
         Canis::SceneAssetHandle bulletPrefab = { .path = "assets/prefabs/magic_bullet.scene" };
         float bulletSpeed = 20.0f;
-        int bulletDamage = 10;
-        Canis::Entity* wandTipEntity = nullptr;
+        int bulletHeal = 2;
+        Canis::Entity* staffTipEntity = nullptr;
 
         std::string targetTag = "";
         float detectionRange = 20.0f;
         Canis::Vector3 bodyColliderSize = Canis::Vector3(1.0f);
         int maxHealth = 40;
         int currentHealth = 0;
+        Canis::Entity* currentTarget = nullptr;
         bool logStateChanges = true;
-        bool isBeingHealed;
-        unsigned int healerID;
         Canis::Entity* hammerVisual = nullptr;
         Canis::AudioAssetHandle hitSfxPath1 = { .path = "assets/audio/sfx/hit_1.ogg" };
         Canis::AudioAssetHandle hitSfxPath2 = { .path = "assets/audio/sfx/hit_2.ogg" };
         float hitSfxVolume = 1.0f;
         Canis::SceneAssetHandle deathEffectPrefab = { .path = "assets/prefabs/brawler_death_particles.scene" };
 
-        explicit MageStateMachine(Canis::Entity& _entity);
+        explicit HealerStateMachine(Canis::Entity& _entity);
 
-        SearchState searchState;
-        WandState wandState;
+        SelectState selectState;
+        HealState healState;
 
         void Create() override;
         void Ready() override;
         void Destroy() override;
         void Update(float _dt) override;
 
-        Canis::Entity* FindClosestTarget() const;
+        Canis::Entity* FindLowestHPTarget() const;
         float DistanceTo(const Canis::Entity& _other) const;
         void FaceTarget(const Canis::Entity& _target);
         void MoveTowards(const Canis::Entity& _target, float _speed, float _dt);
@@ -95,6 +94,6 @@ namespace AICombat
         bool m_useFirstHitSfx = true;
     };
 
-    void RegisterMageStateMachineScript(Canis::App& _app);
-    void UnRegisterMageStateMachineScript(Canis::App& _app);
+    void RegisterHealerStateMachineScript(Canis::App& _app);
+    void UnRegisterHealerStateMachineScript(Canis::App& _app);
 }

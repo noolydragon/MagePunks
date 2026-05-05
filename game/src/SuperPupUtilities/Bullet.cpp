@@ -1,5 +1,7 @@
 #include <SuperPupUtilities/Bullet.hpp>
 #include <AICombat/MageStateMachine.hpp>
+#include <AICombat/BrawlerStateMachine.hpp>
+#include <AICombat/HealerStateMachine.hpp>
 #include <Canis/App.hpp>
 #include <Canis/ConfigHelper.hpp>
 
@@ -239,6 +241,14 @@ namespace SuperPupUtilities
         if (auto* mage = hit.entity->GetScript<AICombat::MageStateMachine>())
         {
             mage->TakeDamage(damage);
+        }
+        else if (auto* brawler = hit.entity->GetScript<AICombat::BrawlerStateMachine>())
+        {
+            brawler->TakeDamage(damage);
+        }
+        else if (auto* healer = hit.entity->GetScript<AICombat::HealerStateMachine>())
+        {
+            healer->TakeDamage(damage);
         }
 
         if (destroyOnImpact)

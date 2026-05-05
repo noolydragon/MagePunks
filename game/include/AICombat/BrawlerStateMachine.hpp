@@ -58,6 +58,8 @@ namespace AICombat
         int maxHealth = 40;
         int currentHealth = 0;
         bool logStateChanges = true;
+        bool isBeingHealed;
+        unsigned int healerID;
         Canis::Entity* hammerVisual = nullptr;
         Canis::AudioAssetHandle hitSfxPath1 = { .path = "assets/audio/sfx/hit_1.ogg" };
         Canis::AudioAssetHandle hitSfxPath2 = { .path = "assets/audio/sfx/hit_2.ogg" };
